@@ -2,6 +2,6 @@
 {
     public class GlobalSettings
     {
-        public static bool Bypass_Img_Check = true;
+        public static bool Bypass_Img_Check = false;
     }
 }
