@@ -144,7 +144,7 @@ namespace BPRO.Apps.BingWallDaily.Core
 
                 SizeF copyRightStrSize = graphics.MeasureString(bingImage.copyRight, font);
 
-                int lineHeight = 10;
+                int lineHeight = 8;
                 int topHeight = 0;
 
 
