@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/BPRO.Apps.BingWallDaily.Core/bin/Debug
+/BPRO.Apps.BingWallDaily.Core/obj/Debug
+/packages/Newtonsoft.Json.11.0.1

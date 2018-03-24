@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Net;
-using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
 using Microsoft.Win32;
@@ -13,7 +11,7 @@ using System.Drawing.Imaging;
 
 /* 
  *	Bing Wall Daily Beta
- *	Version: 1
+ *	Version: 1.1
  *
  *	Copyright (c) 2015 Phillip John Tampus (http://www.codetampus.com/)
  *
@@ -22,10 +20,7 @@ using System.Drawing.Imaging;
  *
  */
 using System.Runtime.InteropServices;
-using System.Timers;
 using System.Windows.Forms;
-using System.Threading;
-using System.ComponentModel;
 
 namespace BPRO.Apps.BingWallDaily.Core
 {
@@ -52,7 +47,7 @@ namespace BPRO.Apps.BingWallDaily.Core
             {
                 MessageBox.Show("Oops, something went wrong: \n\nMessage: \n" + e.Message + "\n\nStack Trace: \n" + e.StackTrace);
             }
-            
+
         }
 
         public static void StartGettingWallpaper()
@@ -113,7 +108,7 @@ namespace BPRO.Apps.BingWallDaily.Core
             {
                 throw new Exception("There was a problem on using the image: \n" + e.Message + "\nStack Trace: " + e.StackTrace);
             }
-            
+
         }
 
         /// <summary>
@@ -143,16 +138,36 @@ namespace BPRO.Apps.BingWallDaily.Core
 
                 SolidBrush brush = new SolidBrush(color);
                 SolidBrush bgbrush = new SolidBrush(bgcolor);
-                
+
                 //draw text on image
                 Graphics graphics = Graphics.FromImage(img);
 
-                graphics.DrawString(bingImage.copyRight, font, bgbrush, new Point(59, 1015));
-                graphics.DrawString(bingImage.copyRight, font, brush, new Point(60, 1014));
+                SizeF copyRightStrSize = graphics.MeasureString(bingImage.copyRight, font);
 
-                string disclaimerText = "This image is acquired through a public URL by BingWallDaily®, a software \ncreated by BPRO Consuting LLP. All rights reserved to the owner of the image.";
-                graphics.DrawString(disclaimerText, discFont, bgbrush, new Point(59, 1035));
-                graphics.DrawString(disclaimerText, discFont, brush, new Point(60, 1034));
+                int lineHeight = 10;
+                int topHeight = 0;
+
+
+                graphics.DrawString(bingImage.copyRight, font, bgbrush, new Point(img.Size.Width - ((int)copyRightStrSize.Width + 3) - 1, (int)copyRightStrSize.Height + 1));
+                graphics.DrawString(bingImage.copyRight, font, brush, new Point(img.Size.Width - ((int)copyRightStrSize.Width + 3), (int)copyRightStrSize.Height));
+
+                topHeight += (int)copyRightStrSize.Height + 1 + lineHeight;
+
+                string disclaimerText = "Image was acquired using a public URL. BingWallDaily® is a free software by BPRO Consuting LLP.";
+
+                SizeF disclaimerStrSize = graphics.MeasureString(disclaimerText, discFont);
+
+                graphics.DrawString(disclaimerText, discFont, bgbrush, new Point(img.Size.Width - ((int)disclaimerStrSize.Width + 20) - 1, topHeight + ((int)disclaimerStrSize.Height) + 1));
+                graphics.DrawString(disclaimerText, discFont, brush, new Point(img.Size.Width - ((int)disclaimerStrSize.Width + 20), topHeight + ((int)disclaimerStrSize.Height)));
+
+                topHeight += (int)disclaimerStrSize.Height + 2;
+
+                string disclaimer2Text = "All rights reserved to the owner of the image.";
+
+                SizeF disclaimer2StrSize = graphics.MeasureString(disclaimer2Text, discFont);
+
+                graphics.DrawString(disclaimer2Text, discFont, bgbrush, new Point(img.Size.Width - ((int)disclaimer2StrSize.Width + 21) - 1, topHeight + ((int)disclaimer2StrSize.Height) + 1));
+                graphics.DrawString(disclaimer2Text, discFont, brush, new Point(img.Size.Width - ((int)disclaimer2StrSize.Width + 21), topHeight + (int)disclaimer2StrSize.Height));
 
                 graphics.Dispose();
 
@@ -170,7 +185,7 @@ namespace BPRO.Apps.BingWallDaily.Core
                 img.Dispose();
                 source.Dispose();
                 output.Dispose();
-                
+
             }
             catch (Exception ex)
             {
@@ -180,81 +195,4 @@ namespace BPRO.Apps.BingWallDaily.Core
 
 
     }
-
-    public class BingImageOfTheDay
-    {
-        public const string HD_Suffix = "_1920x1080.jpg";
-        public List<BingImage> images { get; set; }
-        private string hdImageUrl;
-        public string imageFilename { get; set; }
-        public string imageFilename_wm { get; set; }
-        public string copyRight { get; set; }
-        public bool processImage { get; set; }
-
-        public void PullImage()
-        {
-            try
-            {
-                processImage = true;
-                if (!this.images.Any())
-                {
-                    processImage = false;
-                    return;
-                }
-                BingImage bingImage = this.images[0];
-
-                this.hdImageUrl = "http://www.bing.com/" + bingImage.urlbase + HD_Suffix;
-                string dir = @"C:\BingWallDaily\wallpapers\";
-
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
-
-                this.imageFilename = dir + "bingwallpaper_" + bingImage.hsh + " .jpg";
-                this.imageFilename_wm = dir + "bingwallpaper_" + bingImage.hsh + "_watermarked" + ".jpg";
-                this.copyRight = bingImage.copyright;
-
-                if (File.Exists(imageFilename_wm))
-                {
-                    //meaning the image is the latest image.
-                    processImage = false;
-                    return;
-                }
-
-                HttpWebRequest lxRequest = (HttpWebRequest)WebRequest.Create(hdImageUrl);
-
-                // returned values are returned as a stream, then read into a string
-                String lsResponse = string.Empty;
-                using (HttpWebResponse lxResponse = (HttpWebResponse)lxRequest.GetResponse())
-                {
-                    using (BinaryReader reader = new BinaryReader(lxResponse.GetResponseStream()))
-                    {
-                        Byte[] lnByte = reader.ReadBytes(1 * 1024 * 1024 * 10);
-                        using (FileStream lxFS = new FileStream(imageFilename, FileMode.Create))
-                        {
-                            lxFS.Write(lnByte, 0, lnByte.Length);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception("There was a problem on pulling the image: \n" + e.Message + "\nStack Trace: " + e.StackTrace);
-            }
-            
-        }
-    }
-
-    public class BingImage {
-        public string url { get; set; }
-        public string fullstartdate { get; set; }
-        public string enddate { get; set; }
-        public string urlbase { get; set; }
-        public string copyright { get; set; }
-        public string copyrightsource { get; set; }
-        public string hsh { get; set; }
-    }
-
-
 }
