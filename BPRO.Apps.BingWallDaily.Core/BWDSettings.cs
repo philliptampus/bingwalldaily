@@ -1,6 +1,6 @@
 ﻿namespace BPRO.Apps.BingWallDaily.Core
 {
-    public class GlobalSettings
+    public class BWDSettings
     {
         public static bool Bypass_Img_Check = false;
     }

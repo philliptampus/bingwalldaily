@@ -40,7 +40,7 @@ namespace BPRO.Apps.BingWallDaily.Core
                 this.imageFilename_wm = dir + "bingwallpaper_" + bingImage.hsh + "_watermarked" + ".jpg";
                 this.copyRight = bingImage.copyright;
 
-                if (!GlobalSettings.Bypass_Img_Check && File.Exists(imageFilename_wm))
+                if (!BWDSettings.Bypass_Img_Check && File.Exists(imageFilename_wm))
                 {
                     //meaning the image is the latest image.
                     processImage = false;

@@ -39,6 +39,7 @@ Source: "..\BPRO.Apps.BingWallDaily.Core\bin\Debug\BingWallDaily.pdb"; DestDir: 
 Source: "..\BPRO.Apps.BingWallDaily.Core\bin\Debug\BingWallDaily.vshost.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\BPRO.Apps.BingWallDaily.Core\bin\Debug\BingWallDaily.vshost.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\BPRO.Apps.BingWallDaily.Core\bin\Debug\BingWallDaily.vshost.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\BPRO.Apps.BingWallDaily.Core\bin\Debug\BingWallDailyCheck.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\BPRO.Apps.BingWallDaily.Core\bin\Debug\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
@@ -49,4 +50,6 @@ Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Fil
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
-
+Filename: "schtasks"; \
+    Parameters: "/Create /F /TN ""BingWallDailyCheck"" /XML ""{app}\BingWallDailyCheck.xml"""; \
+    Flags: runhidden
