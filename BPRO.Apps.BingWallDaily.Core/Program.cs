@@ -153,7 +153,7 @@ namespace BPRO.Apps.BingWallDaily.Core
 
                 topHeight += (int)copyRightStrSize.Height + 1 + lineHeight;
 
-                string disclaimerText = "Image was acquired using a public URL. BingWallDaily® is a free software by BPRO Consuting LLP.";
+                string disclaimerText = "Image date: " + DateTime.Now.ToShortDateString() + ". Image was acquired using a public URL. BingWallDaily® is a free software by BPRO Consuting LLP.";
 
                 SizeF disclaimerStrSize = graphics.MeasureString(disclaimerText, discFont);
 
