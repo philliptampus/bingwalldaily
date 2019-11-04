@@ -16,3 +16,5 @@
 /BPRO.Apps.BingWallDaily.Core/obj/Release
 /packages
 /BingWallDailyTests/obj/Debug
+/BingWallDailyRunner/bin/Debug
+/BingWallDailyRunner/obj/Debug

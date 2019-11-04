@@ -12,6 +12,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BingWallDailyService", "Bin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BingWallDailyTests", "BingWallDailyTests\BingWallDailyTests.csproj", "{75EA2C5F-CC60-4F4F-BFE8-CC3155FF5F6C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BingWallDailyRunner", "BingWallDailyRunner\BingWallDailyRunner.csproj", "{7E58ABE4-A6F4-4261-90D5-8FC8BADE684F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE2F61AE-63DF-44D3-8C3E-BB459EBFE202} = {FE2F61AE-63DF-44D3-8C3E-BB459EBFE202}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +35,10 @@ Global
 		{75EA2C5F-CC60-4F4F-BFE8-CC3155FF5F6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75EA2C5F-CC60-4F4F-BFE8-CC3155FF5F6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75EA2C5F-CC60-4F4F-BFE8-CC3155FF5F6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E58ABE4-A6F4-4261-90D5-8FC8BADE684F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E58ABE4-A6F4-4261-90D5-8FC8BADE684F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E58ABE4-A6F4-4261-90D5-8FC8BADE684F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E58ABE4-A6F4-4261-90D5-8FC8BADE684F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

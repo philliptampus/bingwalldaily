@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.ServiceProcess;
 using System.Timers;
 
@@ -9,7 +10,6 @@ namespace BingWallDailyService
 {
     public partial class BingWallDailyService : ServiceBase
     {
-
         public BingWallDailyService()
         {
             InitializeComponent();
@@ -38,7 +38,7 @@ namespace BingWallDailyService
             {
                 try
                 {
-                    BingImageProcessor.Init();
+                    ProcessBingWallpaperUpdate();
                     eventLog1.WriteEntry("Successfully initiated BingWallDaily process on timer.", EventLogEntryType.Information);
                 }
                 catch (Exception e)
@@ -54,7 +54,7 @@ namespace BingWallDailyService
             {
                 case SessionChangeReason.SessionLogon:
                 case SessionChangeReason.SessionUnlock:
-                    BingImageProcessor.Init();
+                    ProcessBingWallpaperUpdate();
                     break;
                 default:
                     break;
@@ -70,6 +70,21 @@ namespace BingWallDailyService
         protected override void OnStop()
         {
         }
+
+        private void ProcessBingWallpaperUpdate()
+        {
+            //BingImageProcessor.Init();
+            //var bingImageOfTheDay = BingImageProcessor.GetBingImageofTheDay();
+
+            //SetImageAsWallpaper(bingImageOfTheDay.imageFilename_wm);
+            string path = Process.GetCurrentProcess().MainModule.FileName;
+            path = path.Substring(0, path.LastIndexOf("\\"));
+
+            ProcessStartInfo info = new ProcessStartInfo(path + "\\BingWallDailyRunner.exe");
+            Process p = Process.Start(info);
+        }
+
+
 
     }
 }

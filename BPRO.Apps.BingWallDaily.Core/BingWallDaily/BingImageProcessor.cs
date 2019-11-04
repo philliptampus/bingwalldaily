@@ -10,17 +10,11 @@ using System.Runtime.InteropServices;
 
 namespace BPRO.Apps.BingWallDaily.Core
 {
-    public static class BingImageProcessor
+    public class BingImageProcessor
     {
-        const int SPI_SETDESKWALLPAPER = 20;
-        const int SPIF_UPDATEINIFILE = 0x01;
-        const int SPIF_SENDWININICHANGE = 0x02;
-        static BingImageOfTheDay bingImage = new BingImageOfTheDay();
+        private BingImageOfTheDay bingImage = new BingImageOfTheDay();
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
-
-        public static void Init()
+        public void Init()
         {
             WebRequest request = WebRequest.Create("http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1");
 
@@ -41,7 +35,12 @@ namespace BPRO.Apps.BingWallDaily.Core
             File.Delete(bingImage.imageFilename);
         }
 
-        private static BingImageOfTheDay ProcessImageFile(BingImagesContainer imagesContainer)
+        public BingImageOfTheDay GetBingImageofTheDay()
+        {
+            return bingImage;
+        }
+
+        private BingImageOfTheDay ProcessImageFile(BingImagesContainer imagesContainer)
         {
             var bingImageContainer = new BingImageOfTheDay();
 
@@ -97,7 +96,7 @@ namespace BPRO.Apps.BingWallDaily.Core
             return bingImageContainer;
         }
 
-        private static void AddWaterMarkText()
+        private void AddWaterMarkText()
         {
             try
             {
@@ -171,7 +170,15 @@ namespace BPRO.Apps.BingWallDaily.Core
             }
         }
 
-        private static void SetImageAsWallpaper()
+
+        const int SPI_SETDESKWALLPAPER = 20;
+        const int SPIF_UPDATEINIFILE = 0x01;
+        const int SPIF_SENDWININICHANGE = 0x02;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+
+        private void SetImageAsWallpaper()
         {
             try
             {
