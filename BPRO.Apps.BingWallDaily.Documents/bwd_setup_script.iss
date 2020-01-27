@@ -35,10 +35,6 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 [Files]
 Source: "..\BPRO.Apps.BingWallDaily.Core\bin\Debug\BingWallDaily.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\BPRO.Apps.BingWallDaily.Core\bin\Debug\BingWallDaily.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\BPRO.Apps.BingWallDaily.Core\bin\Debug\BingWallDaily.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\BPRO.Apps.BingWallDaily.Core\bin\Debug\BingWallDaily.vshost.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\BPRO.Apps.BingWallDaily.Core\bin\Debug\BingWallDaily.vshost.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\BPRO.Apps.BingWallDaily.Core\bin\Debug\BingWallDaily.vshost.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\BPRO.Apps.BingWallDaily.Core\bin\Debug\BingWallDailyCheck.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\BPRO.Apps.BingWallDaily.Core\bin\Debug\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
